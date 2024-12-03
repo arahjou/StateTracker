@@ -45,7 +45,7 @@ server <- function(input, output, session) {
   # Update current time every second
   output$currentTime <- renderText({
     invalidateLater(1000, session)  # Update every second
-    format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+    format(Sys.time(), "%Y-%m-%d %H:%M:%OS3")
   })
   
   # Handle "Here!" button
@@ -86,16 +86,16 @@ server <- function(input, output, session) {
     showNotification("Data reset successfully.", type = "message")
   })
   
-  # Recording logic with unconditional invalidateLater
+  # Recording logic with updated interval
   observe({
-    invalidateLater(1000, session)  # Always check every second
+    invalidateLater(500, session)  # Check every 0.5 seconds
     
     if (values$recording) {
-      # Check if 30 seconds have passed since the last recording
-      if (is.null(values$last_record_time) || difftime(Sys.time(), values$last_record_time, units = "secs") >= 30) {
+      # Check if 0.5 seconds have passed since the last recording
+      if (is.null(values$last_record_time) || difftime(Sys.time(), values$last_record_time, units = "secs") >= 0.5) {
         current_time <- Sys.time()
         new_entry <- data.frame(
-          DATE.TIME = format(current_time, "%Y-%m-%d %H:%M:%S"), 
+          DATE.TIME = format(current_time, "%Y-%m-%d %H:%M:%OS3"),  # Include date and milliseconds
           State = values$state, 
           stringsAsFactors = FALSE
         )
@@ -131,7 +131,10 @@ server <- function(input, output, session) {
   # Display recorded data
   output$dataTable <- renderDataTable({
     if (file.exists(output_file) && file.info(output_file)$size > 0) {
-      read.csv(output_file)
+      # Read the data and ensure DATE.TIME is properly formatted
+      data <- read.csv(output_file, stringsAsFactors = FALSE)
+      data$DATE.TIME <- as.POSIXct(data$DATE.TIME, format = "%Y-%m-%d %H:%M:%OS3")
+      data
     } else {
       values$data
     }
