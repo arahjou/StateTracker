@@ -25,8 +25,8 @@
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone git@github.com:arahjou/StateTracker.git
+   cd git@github.com:arahjou/StateTracker.git
    ```
 
 2. **Install Required Dependencies**:
