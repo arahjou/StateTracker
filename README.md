@@ -2,7 +2,7 @@
 
 ## Presence and Absence Timestamp Recorder
 
-This Streamlit application allows users to record their presence (`Here!`) or absence (`Leave!`) along with timestamps, saving the data to a CSV file. It is specifically designed for scenarios where light spectrum data is being recorded, and the user needs to timestamp their state during the recording process.
+This Streamlit application allows users to record their presence (`Here!`) or absence (`Leave!`) along with timestamps, saving the data to a CSV file. It is specifically designed for scenarios where other data is being recorded, and the user needs to timestamp their state during the recording process. StateTracker can be used to label other recorded data for machine learning purpose.
 
 ---
 
